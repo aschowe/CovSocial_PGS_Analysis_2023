@@ -24,7 +24,7 @@ one-way ANOVA is shown in Table 3.
 ## 04_PGS_multinom_latent.R
 For those PGS with mean differences between the trajectories, we applied 
 multinomial regression to test which trajectories can be distinguished 
-based on the PGS. Output is shown in Table 4.  
+based on the PGS. Results are shown in Table 4 and Fig 2.  
 
 ## 05_PGS_lm_latent.R 
 In this script, we run linear regression to test associations between 
