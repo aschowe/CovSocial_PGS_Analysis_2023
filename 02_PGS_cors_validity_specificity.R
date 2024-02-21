@@ -6,13 +6,14 @@
 ##libs
 library(writexl)
 library(misty)
+library(forestplot)
 
 ##func
 source("MS_V2_26-09-2023/00_helper_functions.R")
 
 ## data 
 load("Phenotypic_data/validate_PRS.Rdata")
-load("MS_V2_26-09-2023/processed_data/PGSs_28082023.Rdata")
+load("MS_V2_26-09-2023/processed_data/PGSs_15022024.Rdata")
 load("MS_V2_26-09-2023/processed_data/pheno_wide.Rdata")
 
 ##merge
@@ -29,7 +30,7 @@ cor.mat <- corstars(dat[,PRSes])
 rownames(cor.mat) <- gsub("_PRS_standardized", "", rownames(cor.mat))
 colnames(cor.mat) <- gsub("_PRS_standardized", "", colnames(cor.mat))
 cor.mat <- cbind(" "=rownames(cor.mat), cor.mat)
-writexl::write_xlsx(cor.mat, "MS_V2_26-09-2023/Tables/02_validity_cormat.xlsx")
+writexl::write_xlsx(cor.mat, "MS_V2_26-09-2023/Tables_revised/02_validity_cormat.xlsx")
 
 # Linear regression ======================================
 ## Depressive symptoms ------------------------------------
@@ -59,7 +60,7 @@ rownames(depress_PhQ9_differences) <- gsub("_PRS_standardized", "", rownames(dep
 depress_PhQ9_differences <- rownames_to_column(depress_PhQ9_differences, "PGS")
 
 ## save table
-writexl::write_xlsx(depress_PhQ9_differences, "MS_V2_26-09-2023/Tables/02_validity_depress.xlsx")
+writexl::write_xlsx(depress_PhQ9_differences, "MS_V2_26-09-2023/Tables_revised/02_validity_depress.xlsx")
 
 ## Plot
 
@@ -87,7 +88,7 @@ depress_PhQ9_differences |>
                line = "darkblue",
                summary = "royalblue") |>
   fp_add_lines(h_2 = gpar(lty = 1, columns = 1:4), 
-               h_21 = gpar(lwd = 1,
+               h_22 = gpar(lwd = 1,
                            columns = 1:4)) |>
   fp_decorate_graph(box = gpar(lty = 2, col = "black"),
                     graph.pos = 3)
@@ -119,7 +120,7 @@ anx_STAI_differences <- round(anx_STAI_differences, 3)
 rownames(anx_STAI_differences) <- gsub("_PRS_standardized", "", rownames(anx_STAI_differences))
 anx_STAI_differences <- rownames_to_column(anx_STAI_differences, "PGS")
 
-writexl::write_xlsx(anx_STAI_differences, "MS_V2_26-09-2023/Tables/02_validity_traitanx.xlsx")
+writexl::write_xlsx(anx_STAI_differences, "MS_V2_26-09-2023/Tables_revised/02_validity_traitanx.xlsx")
 
 ## Plot
 setEPS()
@@ -146,7 +147,7 @@ anx_STAI_differences |>
                line = "darkblue",
                summary = "royalblue") |>
   fp_add_lines(h_2 = gpar(lty = 1, columns = 1:4), 
-               h_21 = gpar(lwd = 1,
+               h_22 = gpar(lwd = 1,
                            columns = 1:4)) |>
   fp_decorate_graph(box = gpar(lty = 2, col = "black"),
                     graph.pos = 3)
@@ -177,7 +178,7 @@ loneli_UCLA_differences <- loneli_UCLA_differences[order(loneli_UCLA_differences
 loneli_UCLA_differences <- round(loneli_UCLA_differences, 3)
 rownames(loneli_UCLA_differences) <- gsub("_PRS_standardized", "", rownames(loneli_UCLA_differences))
 loneli_UCLA_differences <- rownames_to_column(loneli_UCLA_differences, "PGS")
-writexl::write_xlsx(loneli_UCLA_differences, "MS_V2_26-09-2023/Tables/02_validity_traitlone.xlsx")
+writexl::write_xlsx(loneli_UCLA_differences, "MS_V2_26-09-2023/Tables_revised/02_validity_traitlone.xlsx")
 
 ## Plot
 setEPS()
@@ -204,7 +205,7 @@ loneli_UCLA_differences |>
                line = "darkblue",
                summary = "royalblue") |>
   fp_add_lines(h_2 = gpar(lty = 1, columns = 1:4), 
-               h_21 = gpar(lwd = 1,
+               h_22 = gpar(lwd = 1,
                            columns = 1:4)) |>
   fp_decorate_graph(box = gpar(lty = 2, col = "black"),
                     graph.pos = 3)
@@ -237,7 +238,7 @@ neurotic_NEO_differences <- round(neurotic_NEO_differences, 3)
 rownames(neurotic_NEO_differences) <- gsub("_PRS_standardized", "", rownames(neurotic_NEO_differences))
 neurotic_NEO_differences <- rownames_to_column(neurotic_NEO_differences, "PGS")
 
-writexl::write_xlsx(neurotic_NEO_differences, "MS_V2_26-09-2023/Tables/02_validity_traitNEO.xlsx")
+writexl::write_xlsx(neurotic_NEO_differences, "MS_V2_26-09-2023/Tables_revised/02_validity_traitNEO.xlsx")
 
 ## Plot
 setEPS()
@@ -266,7 +267,7 @@ neurotic_NEO_differences |>
                line = "darkblue",
                summary = "royalblue") |>
   fp_add_lines(h_2 = gpar(lty = 1, columns = 1:4), 
-               h_21 = gpar(lwd = 1,
+               h_22 = gpar(lwd = 1,
                            columns = 1:4)) |>
   fp_decorate_graph(box = gpar(lty = 2, col = "black"),
                     graph.pos = 3)
@@ -299,7 +300,7 @@ rownames(LifeSatis_SWLS_differences) <- gsub("_PRS_standardized", "", rownames(L
 LifeSatis_SWLS_differences <- rownames_to_column(LifeSatis_SWLS_differences, "PGS")
 
 writexl::write_xlsx(LifeSatis_SWLS_differences, 
-                    "MS_V2_26-09-2023/Tables/02_validity_traitLiSat.xlsx")
+                    "MS_V2_26-09-2023/Tables_revised/02_validity_traitLiSat.xlsx")
 
 ## Plot
 setEPS()
@@ -328,7 +329,7 @@ LifeSatis_SWLS_differences |>
                line = "darkblue",
                summary = "royalblue") |>
   fp_add_lines(h_2 = gpar(lty = 1, columns = 1:4), 
-               h_21 = gpar(lwd = 1,
+               h_22 = gpar(lwd = 1,
                            columns = 1:4)) |>
   fp_decorate_graph(box = gpar(lty = 2, col = "black"),
                     graph.pos = 3)
@@ -361,7 +362,7 @@ rownames(edu_years_differences) <- gsub("_PRS_standardized", "", rownames(edu_ye
 edu_years_differences <- rownames_to_column(edu_years_differences, "PGS")
 
 writexl::write_xlsx(edu_years_differences, 
-                    "MS_V2_26-09-2023/Tables/02_validity_EDUyears.xlsx")
+                    "MS_V2_26-09-2023/Tables_revised/02_validity_EDUyears.xlsx")
 
 ## Plot
 setEPS()
@@ -388,7 +389,7 @@ edu_years_differences |>
                line = "darkblue",
                summary = "royalblue") |>
   fp_add_lines(h_2 = gpar(lty = 1, columns = 1:4), 
-               h_21 = gpar(lwd = 1,
+               h_22 = gpar(lwd = 1,
                            columns = 1:4)) |>
   fp_decorate_graph(box = gpar(lty = 2, col = "black"),
                     graph.pos = 3)

@@ -8,19 +8,23 @@
 library(dplyr)
 library(rstatix)
 library(writexl)
+library(misty)
+library(tibble)
 
 ##func
 source("MS_V2_26-09-2023/00_helper_functions.R")
 
 ## data
 load("MS_V2_26-09-2023/processed_data/pheno_wide.Rdata")
-load("MS_V2_26-09-2023/processed_data/PGSs_28082023.Rdata")
+load("MS_V2_26-09-2023/processed_data/PGSs_15022024.Rdata")
 
 ##merge
 Full_data <- left_join(dat_final, PGSs,
                        by = c( "GeneID"="IID"))
 Full_data <- distinct(Full_data)
-Full_data$DEP_PRS_standardized <- item.reverse(Full_data$DEP_PRS_standardized, min = -3, max = 4)
+
+#reverse "back" because these were flipped as part of the GWAS generation 
+Full_data$DEP_PRS_standardized <- item.reverse(Full_data$DEP_PRS_standardized, min = -3, max = 4) 
 Full_data$NEU_PRS_standardized <- item.reverse(Full_data$NEU_PRS_standardized, min = -4, max = 3)
 
 ## Predictors 
@@ -46,8 +50,8 @@ for(i in 1:length(PGSes)){
   res.aov <- anova_summary(res.aov)
   aov_tab[PGS,c(5:7)] <- res.aov[1,c(2,4,5)]
   aov_tab[PGS,c(8)] <- p.adjust(res.aov[1,c(5)], 
-                                method = "bonferroni",
-                                n = 19)
+                                method = "fdr",
+                                n = 20)
 }
 names(aov_tab) <- c("Most Vulnerable (n = 128)",
                     "More Vulnerable (n = 296)",
@@ -65,6 +69,6 @@ aov_tab <- round(aov_tab,3)
 aov_tab <- rownames_to_column(aov_tab, "PGS")
 aov_tab$PGS <- gsub("_PRS_standardized", "", aov_tab$PGS)
 write_xlsx(aov_tab, 
-           "MS_V2_26-09-2023/Tables/03_PGS_aov_tab.xlsx")
+           "MS_V2_26-09-2023/Tables_revised/03_PGS_aov_tab.xlsx")
 
 #done.
